@@ -1,0 +1,22 @@
+<form
+  [formGroup]="completeProfile"
+  (ngSubmit)="onCompleteProfileSubmitted(completeProfile)"
+>
+  <div>
+    <mat-form-field appearance="fill"
+      ><mat-label>Bio</mat-label
+      ><input
+        matInput
+        type="text"
+        placeholder="Bio"
+        formControlName="bio"
+        required
+      /><mat-error *ngIf="completeProfile.get('bio')!.invalid"
+        >bio is invalid</mat-error
+      ></mat-form-field
+    >
+  </div>
+  <div>
+    <button type="submit" mat-raised-button color="primary">Submit</button>
+  </div>
+</form>
