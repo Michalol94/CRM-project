@@ -19,7 +19,7 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
-        if (error.status === 403 && error.message === 'Token is invalid') {
+        if (error.status === 403) {
           return this._authService.refreshToken().pipe(
             switchMap((resp) => {
               const newRequest = req.clone({

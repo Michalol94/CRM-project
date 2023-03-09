@@ -1,3 +1,16 @@
 Leads
 <div *ngIf="me$ | async as me">{{ me | json }}</div>
 <button (click)="logout()">Logout</button>
+
+<div *ngFor="let lead of leads$ | async">
+  {{ lead.name }}{{ lead.annualRevenue }}
+  <div *ngFor="let item of lead.scope">{{ item }}</div>
+</div>
+
+<!-- <div *ngFor="let item of leadsOnly$ | async">
+  {{ item.name }}
+</div>
+
+<div *ngFor="let item of activitiesOnly$ | async">
+  {{ item.name }}
+</div> -->

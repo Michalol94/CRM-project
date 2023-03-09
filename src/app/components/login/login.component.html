@@ -5,10 +5,9 @@ login
       ><mat-label>Email</mat-label
       ><input
         matInput
-        type="text"
+        type="email"
         placeholder="Email"
         formControlName="email"
-        required
       /><mat-error *ngIf="login.get('email')!.invalid"
         >email is invalid</mat-error
       ></mat-form-field
@@ -19,16 +18,25 @@ login
       ><mat-label>Password</mat-label
       ><input
         matInput
-        type="text"
+        type="password"
         placeholder="Password"
         formControlName="password"
-        required
       /><mat-error *ngIf="login.get('password')!.invalid"
         >password is invalid</mat-error
       ></mat-form-field
     >
   </div>
+  <div *ngIf="login.hasError('backenderror')">
+    {{ login.getError("backenderror") }}
+  </div>
   <div>
-    <button type="submit" mat-raised-button color="primary">Submit</button>
+    <button
+      type="submit"
+      mat-raised-button
+      color="primary"
+      [disabled]="!login.valid"
+    >
+      Submit
+    </button>
   </div>
 </form>

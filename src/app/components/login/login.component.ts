@@ -1,10 +1,11 @@
 import { CredentialsRequest } from './../../models/credentials/credentials/credentials.request';
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ViewEncapsulation,
 } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
 
@@ -17,11 +18,15 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
   readonly login: FormGroup = new FormGroup({
-    email: new FormControl(),
-    password: new FormControl(),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required]),
   });
 
-  constructor(private _authService: AuthService, private _router: Router) {}
+  constructor(
+    private _authService: AuthService,
+    private _router: Router,
+    private _cdr: ChangeDetectorRef
+  ) {}
 
   onLoginSubmitted(login: FormGroup): void {
     if (login.invalid) {
@@ -31,8 +36,12 @@ export class LoginComponent {
       email: login.value.email,
       password: login.value.password,
     };
-    this._authService
-      .login(credentials)
-      .subscribe({ next: () => this._router.navigateByUrl('leads') });
+    this._authService.login(credentials).subscribe({
+      next: () => this._router.navigateByUrl('leads'),
+      error: (e) => {
+        this.login.setErrors({ backenderror: e.error.message }),
+          this._cdr.detectChanges();
+      },
+    });
   }
 }

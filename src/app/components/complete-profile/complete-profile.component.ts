@@ -4,7 +4,7 @@ import {
   Component,
   ViewEncapsulation,
 } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../services/user/user.service';
 
 @Component({
@@ -16,7 +16,10 @@ import { UserService } from '../../services/user/user.service';
 })
 export class CompleteProfileComponent {
   readonly completeProfile: FormGroup = new FormGroup({
-    bio: new FormControl(),
+    bio: new FormControl('', [
+      Validators.required,
+      Validators.pattern('(?:[^.!?]+[.!?]){2,}'),
+    ]),
   });
 
   constructor(private _userService: UserService, private _router: Router) {}

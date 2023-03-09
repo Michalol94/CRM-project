@@ -5,16 +5,20 @@
   <div>
     <mat-form-field appearance="fill"
       ><mat-label>Bio</mat-label
-      ><input
+      ><textarea
         matInput
-        type="text"
+        type="textarea"
         placeholder="Bio"
         formControlName="bio"
         required
-      /><mat-error *ngIf="completeProfile.get('bio')!.invalid"
+      ></textarea
+      ><mat-error *ngIf="completeProfile.get('bio')!.invalid"
         >bio is invalid</mat-error
       ></mat-form-field
     >
+  </div>
+  <div>
+    <a>{{ completeProfile.get("bio")?.value }}</a>
   </div>
   <div>
     <button type="submit" mat-raised-button color="primary">Submit</button>
